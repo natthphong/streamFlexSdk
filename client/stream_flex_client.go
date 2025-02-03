@@ -16,7 +16,7 @@ type StreamFlexClient struct {
 	HTTPClient    *http.Client
 	S3Client      *s3.S3
 	KafkaProducer *kafka.SendMessageSyncWithTopicFunc
-	details       map[string]interface{}
+	Details       map[string]interface{}
 	Payload       []byte
 }
 type StreamFlexScript interface {
@@ -30,6 +30,7 @@ func NewStreamFlexClient(
 	httpClient *http.Client,
 	s3Client *s3.S3,
 	kafkaProducer *kafka.SendMessageSyncWithTopicFunc,
+	details map[string]interface{},
 	payload []byte,
 ) *StreamFlexClient {
 	return &StreamFlexClient{
@@ -39,6 +40,7 @@ func NewStreamFlexClient(
 		HTTPClient:    httpClient,
 		S3Client:      s3Client,
 		KafkaProducer: kafkaProducer,
+		Details:       details,
 		Payload:       payload,
 	}
 }

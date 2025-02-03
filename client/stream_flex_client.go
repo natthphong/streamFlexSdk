@@ -2,12 +2,11 @@ package client
 
 import (
 	"context"
+	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/go-redis/redis/v9"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/natthphong/streamFlexSdk/kafka"
 	"net/http"
-
-	"github.com/aws/aws-sdk-go/aws/session"
 )
 
 type StreamFlexClient struct {
@@ -15,8 +14,9 @@ type StreamFlexClient struct {
 	DB            *pgxpool.Pool
 	RedisClient   *redis.UniversalClient
 	HTTPClient    *http.Client
-	S3Client      *session.Session
-	KafkaProducer *kafka.SendMessageSyncFunc
+	S3Client      *s3.S3
+	KafkaProducer *kafka.SendMessageSyncWithTopicFunc
+	details       map[string]interface{}
 	Payload       []byte
 }
 type StreamFlexScript interface {
@@ -28,8 +28,8 @@ func NewStreamFlexClient(
 	db *pgxpool.Pool,
 	redisClient *redis.UniversalClient,
 	httpClient *http.Client,
-	s3Client *session.Session,
-	kafkaProducer *kafka.SendMessageSyncFunc,
+	s3Client *s3.S3,
+	kafkaProducer *kafka.SendMessageSyncWithTopicFunc,
 	payload []byte,
 ) *StreamFlexClient {
 	return &StreamFlexClient{

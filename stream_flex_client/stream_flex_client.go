@@ -1,4 +1,4 @@
-package client
+package stream_flex_client
 
 import (
 	"context"
